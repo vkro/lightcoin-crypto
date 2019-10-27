@@ -16,20 +16,24 @@ class Transaction {
     this.account = account;
   }
 
+  commit() {
+    this.account.balance += this.value;
+  }
+
 }
 
 
 class Withdrawal extends Transaction {
 
-  commit() {
-    this.account.balance -= this.amount;
+  get value() {
+    return ~this.amount;
   }
 }
 
 class Deposit extends Transaction {
 
-  commit() {
-    this.account.balance += this.amount;
+  get value() {
+    return this.amount;
   }
 
 }
@@ -43,14 +47,14 @@ class Deposit extends Transaction {
 const myAccount = new Account("snow-patrol");
 
 t1 = new Withdrawal(50.25, myAccount);
-t1.commit();
+t1.value;
 console.log('Transaction 1:', t1.amount, 'Balance:', myAccount.balance);
 
 t2 = new Withdrawal(9.99, myAccount);
-t2.commit();
-console.log('Transaction 2:', t1.amount, 'Balance:', myAccount.balance);
+t2.value;
+console.log('Transaction 2:', t2.amount, 'Balance:', myAccount.balance);
 
 
 t3 = new Deposit(120.00, myAccount);
-t3.commit();
-console.log('Transaction 3:', t1.amount, 'Balance:', myAccount.balance);
+t3.value;
+console.log('Transaction 3:', t3.amount, 'Balance:', myAccount.balance);
